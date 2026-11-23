@@ -9,6 +9,24 @@
         "unslop"
       ],
       "path": "skills/backnotprop/pstack"
+    },
+    "mattpocock/skills": {
+      "skills": [
+        "code-review",
+        "codebase-design",
+        "diagnosing-bugs",
+        "domain-modeling",
+        "grill-me",
+        "grill-with-docs",
+        "handoff",
+        "prototype",
+        "research",
+        "tdd",
+        "to-spec",
+        "to-tickets",
+        "triage"
+      ],
+      "path": "skills/mattpocock/skills"
     }
   }
 }
