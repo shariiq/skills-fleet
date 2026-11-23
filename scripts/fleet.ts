@@ -493,6 +493,67 @@ function installFleet(isGlobal: boolean): void {
   }
 }
 
+function cleanDummyHarnesses(): void {
+  console.log("\n🧹 Scanning for dummy agent harness folders...");
+
+  const home = process.env.HOME || "~";
+  const knownHarnessDirs = [
+    ".adal", ".aider-desk", ".astrbot", ".augment", ".autohand", ".bob", ".claude",
+    ".codeartsdoer", ".codebuddy", ".codeium", ".codemaker", ".codestudio", ".commandcode",
+    ".continue", ".forge", ".grok", ".hermes", ".iflow", ".inferencesh", ".jazz", ".junie",
+    ".kiro", ".kode", ".lingma", ".mcpjam", ".minimax", ".moxby", ".mux", ".neovate",
+    ".ona", ".openclaw", ".openhands", ".pochi", ".posit", ".qoder", ".qoder-cn", ".qwen",
+    ".reasonix", ".roo", ".rovodev", ".snowflake", ".tabnine", ".terramind", ".tinycloud",
+    ".trae", ".trae-cn", ".vibe", ".zcode", ".zencoder"
+  ];
+
+  const removed: string[] = [];
+
+  for (const name of knownHarnessDirs) {
+    const p = join(home, name);
+    if (!existsSync(p)) continue;
+
+    try {
+      const entries = readdirSync(p);
+      const isDummyOnly =
+        entries.length === 0 ||
+        (entries.length === 1 &&
+          ["skills", "data", "assistant", "windsurf", "cortex", "agent"].includes(entries[0]));
+
+      if (isDummyOnly) {
+        spawnSync("rm", ["-rf", p]);
+        removed.push(`~/${name}`);
+      } else {
+        console.log(`⚠️  Skipped ~/${name} (contains other non-skill files)`);
+      }
+    } catch {}
+  }
+
+  const localDummies = ["agent", ".claude"];
+  for (const name of localDummies) {
+    const p = join(ROOT_DIR, name);
+    if (existsSync(p)) {
+      try {
+        const entries = readdirSync(p);
+        if (entries.length === 0 || (entries.length === 1 && entries[0] === "skills")) {
+          spawnSync("rm", ["-rf", p]);
+          removed.push(`./${name}`);
+        }
+      } catch {}
+    }
+  }
+
+  if (removed.length === 0) {
+    console.log("✨ No dummy harness folders found. Your environment is clean!\n");
+  } else {
+    console.log(`✨ Removed ${removed.length} dummy harness folder(s):`);
+    for (const item of removed) {
+      console.log(`   - ${item}`);
+    }
+    console.log("");
+  }
+}
+
 function main(): void {
   const command = process.argv[2] || "list";
   const args = process.argv.slice(3);
@@ -542,9 +603,14 @@ function main(): void {
       break;
     }
 
+    case "clean-harnesses":
+    case "purge-harnesses":
+      cleanDummyHarnesses();
+      break;
+
     default:
       console.log(`Unknown command: ${command}`);
-      console.log("Available commands: list, organize, add <source> [skills...], remove <skill> [--source], install [--global], clean [--global] [--all]");
+      console.log("Available commands: list, organize, add <source> [skills...], remove <skill> [--source], install [--global], clean [--global] [--all], clean-harnesses");
       process.exit(1);
   }
 }

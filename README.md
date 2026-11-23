@@ -83,6 +83,11 @@ bun run fleet:clean:machine
 ```
 *(Removes all fleet skills from all agent configurations on your machine).*
 
+To purge all **dummy agent harness folders** created in `~` or the project (e.g. `.bob`, `.terramind`, `.qwen`, `.adal`, `.claude`):
+```bash
+bun run fleet:clean:harnesses
+```
+
 To completely wipe **all skills** across the machine:
 ```bash
 bun run fleet:wipe:machine
