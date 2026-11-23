@@ -22,7 +22,7 @@
 
 ## mattpocock/skills
 - **Location**: `skills/mattpocock/skills/`
-- **Total Skills**: 16
+- **Total Skills**: 17
 
 | Skill | Description | Argument Hint |
 | --- | --- | --- |
@@ -32,6 +32,7 @@
 | [domain-modeling](./skills/mattpocock/skills/domain-modeling/SKILL.md) | Build and sharpen a project's domain model. Use when discussing codebase terminology, writing or edi | `—` |
 | [grill-me](./skills/mattpocock/skills/grill-me/SKILL.md) | A relentless interview to sharpen a plan or design. | `—` |
 | [grill-with-docs](./skills/mattpocock/skills/grill-with-docs/SKILL.md) | A relentless interview to sharpen a plan or design, which also creates docs (ADR's and glossary) as  | `—` |
+| [grilling](./skills/mattpocock/skills/grilling/SKILL.md) | Grill the user relentlessly about a plan, decision, or idea. Use when the user wants to stress-test  | `—` |
 | [handoff](./skills/mattpocock/skills/handoff/SKILL.md) | Compact the current conversation into a handoff document for another agent to pick up. | `What will the next session be used for?` |
 | [implement-spec](./skills/mattpocock/skills/implement-spec/SKILL.md) | Implement the result of /to-spec and /to-tickets in code. | `—` |
 | [improve-codebase-architecture](./skills/mattpocock/skills/improve-codebase-architecture/SKILL.md) | Scan a codebase for deepening opportunities, present them as a visual HTML report, then grill throug | `—` |
