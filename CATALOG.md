@@ -14,7 +14,7 @@
 
 ## mattpocock/skills
 - **Location**: `skills/mattpocock/skills/`
-- **Total Skills**: 13
+- **Total Skills**: 14
 
 | Skill | Description | Argument Hint |
 | --- | --- | --- |
@@ -31,4 +31,5 @@
 | [to-spec](./skills/mattpocock/skills/to-spec/SKILL.md) | Turn the current conversation into a spec and publish it to the project issue tracker: no interview, | `—` |
 | [to-tickets](./skills/mattpocock/skills/to-tickets/SKILL.md) | Break a plan, spec, or the current conversation into a set of tracer-bullet tickets, each declaring  | `—` |
 | [triage](./skills/mattpocock/skills/triage/SKILL.md) | Move issues and external PRs through a state machine of triage roles, categorise, verify, grill if n | `—` |
+| [writing-for-agents](./skills/mattpocock/skills/writing-for-agents/SKILL.md) | Writing documents for agents. Use when creating or editing skills, or modifying AGENTS.md or CLAUDE. | `—` |
 
