@@ -10,3 +10,7 @@ Thumbs.db
 # Build & temp files
 dist/
 tmp/
+
+# Local agent link mirrors
+.claude/
+agent/

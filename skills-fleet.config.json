@@ -2,5 +2,13 @@
   "name": "skills-fleet",
   "version": "1.0.0",
   "description": "Central catalog for managed AI agent skills",
-  "sources": {}
+  "sources": {
+    "backnotprop/pstack": {
+      "skills": [
+        "bro",
+        "unslop"
+      ],
+      "path": "skills/backnotprop/pstack"
+    }
+  }
 }
