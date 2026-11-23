@@ -12,6 +12,14 @@
 | [typescript-best-practices](./skills/backnotprop/pstack/typescript-best-practices/SKILL.md) | TypeScript best practices. Use when reading or editing any .ts or .tsx file. | `—` |
 | [unslop](./skills/backnotprop/pstack/unslop/SKILL.md) | Cut AI tells from any writing. | `—` |
 
+## custom
+- **Location**: `skills/custom/`
+- **Total Skills**: 1
+
+| Skill | Description | Argument Hint |
+| --- | --- | --- |
+| [orchestrate-workers](./skills/custom/orchestrate-workers/SKILL.md) | In T3 Code, run a multi-step task with the main model writing the spec and tickets, making the valua | `—` |
+
 ## mattpocock/skills
 - **Location**: `skills/mattpocock/skills/`
 - **Total Skills**: 14

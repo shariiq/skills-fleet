@@ -29,6 +29,12 @@
         "writing-for-agents"
       ],
       "path": "skills/mattpocock/skills"
+    },
+    "custom": {
+      "skills": [
+        "orchestrate-workers"
+      ],
+      "path": "skills/custom"
     }
   }
 }
