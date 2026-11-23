@@ -320,6 +320,135 @@ function addSkill(source: string, skills: string[]): void {
   listFleet();
 }
 
+function removeSkill(target: string, isSource = false): void {
+  const config = loadConfig();
+  const lock = loadLock();
+
+  if (isSource) {
+    console.log(`Removing entire source: ${target}...`);
+    const sourceData = config.sources[target];
+    if (!sourceData) {
+      console.error(`Source "${target}" not found in fleet.`);
+      return;
+    }
+
+    const sourceDir = resolve(ROOT_DIR, sourceData.path);
+    if (existsSync(sourceDir)) {
+      spawnSync("rm", ["-rf", sourceDir]);
+    }
+
+    for (const skill of sourceData.skills) {
+      const agentLink = join(AGENTS_SKILLS_DIR, skill);
+      if (existsSync(agentLink)) {
+        try { unlinkSync(agentLink); } catch {}
+      }
+      if (lock && lock.skills && lock.skills[skill]) {
+        delete lock.skills[skill];
+      }
+    }
+
+    if (lock) {
+      writeFileSync(LOCK_PATH, JSON.stringify(lock, null, 2) + "\n", "utf-8");
+    }
+
+    delete config.sources[target];
+    saveConfig(config);
+    organize();
+    listFleet();
+    return;
+  }
+
+  console.log(`Removing skill: ${target}...`);
+  let found = false;
+
+  for (const [source, data] of Object.entries(config.sources)) {
+    if (data.skills.includes(target)) {
+      found = true;
+      const skillDir = resolve(ROOT_DIR, data.path, target);
+      if (existsSync(skillDir)) {
+        spawnSync("rm", ["-rf", skillDir]);
+      }
+      data.skills = data.skills.filter((s) => s !== target);
+      if (data.skills.length === 0) {
+        delete config.sources[source];
+        const sourceDir = resolve(ROOT_DIR, data.path);
+        try { spawnSync("rmdir", [sourceDir]); } catch {}
+      }
+    }
+  }
+
+  const agentLink = join(AGENTS_SKILLS_DIR, target);
+  if (existsSync(agentLink)) {
+    try { unlinkSync(agentLink); } catch {}
+  }
+
+  if (lock && lock.skills && lock.skills[target]) {
+    delete lock.skills[target];
+    writeFileSync(LOCK_PATH, JSON.stringify(lock, null, 2) + "\n", "utf-8");
+  }
+
+  if (!found) {
+    console.log(`Skill "${target}" was not found in fleet config, cleaning anyway...`);
+  }
+
+  saveConfig(config);
+  organize();
+  listFleet();
+}
+
+function uninstallFleet(isGlobal: boolean, wipeAll = false): void {
+  if (wipeAll && isGlobal) {
+    console.log("\n🧹 Removing ALL skills from this machine globally...");
+    spawnSync("bunx", ["skills", "remove", "-g", "--all"], { stdio: "inherit" });
+    console.log("\n✨ Machine cleanup complete! No skills remain.");
+    return;
+  }
+
+  const config = loadConfig();
+  const sources = Object.entries(config.sources || {});
+
+  const allSkills = new Set<string>();
+  for (const [, data] of sources) {
+    for (const skill of data.skills) {
+      allSkills.add(skill);
+    }
+  }
+
+  if (allSkills.size === 0) {
+    console.log("No skills registered in this fleet to clean up.");
+    return;
+  }
+
+  const skillList = Array.from(allSkills);
+  console.log(`\n🧹 Cleaning up ${skillList.length} fleet skill(s) from ${isGlobal ? "this machine (global scope)" : "this project"}...`);
+  console.log(`Skills: ${skillList.join(", ")}\n`);
+
+  const args = ["skills", "remove", ...skillList, "-y"];
+  if (isGlobal) args.push("-g");
+
+  console.log(`Executing: bunx ${args.join(" ")}`);
+  spawnSync("bunx", args, { stdio: "inherit" });
+
+  const targetDir = isGlobal
+    ? resolve(process.env.HOME || "~", ".agents", "skills")
+    : AGENTS_SKILLS_DIR;
+
+  if (existsSync(targetDir)) {
+    for (const skill of skillList) {
+      const p = join(targetDir, skill);
+      if (existsSync(p)) {
+        try {
+          unlinkSync(p);
+        } catch {
+          spawnSync("rm", ["-rf", p]);
+        }
+      }
+    }
+  }
+
+  console.log(`\n✨ Fleet cleanup complete for ${isGlobal ? "this machine" : "this project"}!`);
+}
+
 function installFleet(isGlobal: boolean): void {
   const config = loadConfig();
   const sources = Object.entries(config.sources || {});
@@ -379,15 +508,35 @@ function main(): void {
       break;
     }
 
+    case "remove":
+    case "rm": {
+      const target = args[0];
+      if (!target) {
+        console.error("Usage: bun run fleet:remove <skill-name> [--source]");
+        process.exit(1);
+      }
+      const isSource = args.includes("--source");
+      removeSkill(target, isSource);
+      break;
+    }
+
     case "install": {
       const isGlobal = args.includes("-g") || args.includes("--global");
       installFleet(isGlobal);
       break;
     }
 
+    case "uninstall":
+    case "clean": {
+      const isGlobal = args.includes("-g") || args.includes("--global") || args.includes("--machine");
+      const wipeAll = args.includes("--all");
+      uninstallFleet(isGlobal, wipeAll);
+      break;
+    }
+
     default:
       console.log(`Unknown command: ${command}`);
-      console.log("Available commands: list, organize, add <source> [skills...], install [--global]");
+      console.log("Available commands: list, organize, add <source> [skills...], remove <skill> [--source], install [--global], clean [--global] [--all]");
       process.exit(1);
   }
 }

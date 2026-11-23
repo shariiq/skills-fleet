@@ -75,3 +75,25 @@ bun run fleet:organize
   ```bash
   bun run fleet:install:project
   ```
+
+### Clean Up / Uninstall from Machine
+To completely uninstall **everything this fleet added to your machine**:
+```bash
+bun run fleet:clean:machine
+```
+*(Removes all fleet skills from all agent configurations on your machine).*
+
+To completely wipe **all skills** across the machine:
+```bash
+bun run fleet:wipe:machine
+```
+
+### Remove a Skill from the Fleet
+To delete a skill from the repository catalog and disk:
+```bash
+# Remove a single skill
+bun run fleet:remove <skill-name>
+
+# Remove an entire source repo
+bun run fleet:remove <source> --source
+```

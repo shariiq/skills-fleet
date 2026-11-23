@@ -5,12 +5,19 @@
   "type": "module",
   "scripts": {
     "fleet:add": "bun run scripts/fleet.ts add",
+    "fleet:remove": "bun run scripts/fleet.ts remove",
     "fleet:organize": "bun run scripts/fleet.ts organize",
     "fleet:list": "bun run scripts/fleet.ts list",
     "fleet:install:global": "bun run scripts/fleet.ts install --global",
     "fleet:install:project": "bun run scripts/fleet.ts install",
+    "fleet:clean:machine": "bun run scripts/fleet.ts clean --global",
+    "fleet:uninstall:global": "bun run scripts/fleet.ts clean --global",
+    "fleet:uninstall:project": "bun run scripts/fleet.ts clean",
+    "fleet:wipe:machine": "bun run scripts/fleet.ts clean --global --all",
     "skills:list": "bunx skills list",
     "skills:list:global": "bunx skills list -g",
+    "skills:remove": "bunx skills remove",
+    "skills:remove:global": "bunx skills remove -g",
     "skills:update": "bunx skills update"
   },
   "devDependencies": {
