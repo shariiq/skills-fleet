@@ -22,7 +22,7 @@
 
 ## mattpocock/skills
 - **Location**: `skills/mattpocock/skills/`
-- **Total Skills**: 14
+- **Total Skills**: 15
 
 | Skill | Description | Argument Hint |
 | --- | --- | --- |
@@ -33,6 +33,7 @@
 | [grill-me](./skills/mattpocock/skills/grill-me/SKILL.md) | A relentless interview to sharpen a plan or design. | `—` |
 | [grill-with-docs](./skills/mattpocock/skills/grill-with-docs/SKILL.md) | A relentless interview to sharpen a plan or design, which also creates docs (ADR's and glossary) as  | `—` |
 | [handoff](./skills/mattpocock/skills/handoff/SKILL.md) | Compact the current conversation into a handoff document for another agent to pick up. | `What will the next session be used for?` |
+| [improve-codebase-architecture](./skills/mattpocock/skills/improve-codebase-architecture/SKILL.md) | Scan a codebase for deepening opportunities, present them as a visual HTML report, then grill throug | `—` |
 | [prototype](./skills/mattpocock/skills/prototype/SKILL.md) | Build a throwaway prototype to answer a design question. Use when the user wants to sanity-check whe | `—` |
 | [research](./skills/mattpocock/skills/research/SKILL.md) | Investigate a question against high-trust primary sources and capture the findings as a Markdown fil | `—` |
 | [tdd](./skills/mattpocock/skills/tdd/SKILL.md) | Test-driven development. Use when the user wants to build features or fix bugs test-first, mentions  | `—` |
