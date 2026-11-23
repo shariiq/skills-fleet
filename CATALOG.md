@@ -4,11 +4,12 @@
 
 ## backnotprop/pstack
 - **Location**: `skills/backnotprop/pstack/`
-- **Total Skills**: 2
+- **Total Skills**: 3
 
 | Skill | Description | Argument Hint |
 | --- | --- | --- |
 | [bro](./skills/backnotprop/pstack/bro/SKILL.md) | Restate the last message in plain human language, with no jargon. | `—` |
+| [typescript-best-practices](./skills/backnotprop/pstack/typescript-best-practices/SKILL.md) | TypeScript best practices. Use when reading or editing any .ts or .tsx file. | `—` |
 | [unslop](./skills/backnotprop/pstack/unslop/SKILL.md) | Cut AI tells from any writing. | `—` |
 
 ## mattpocock/skills

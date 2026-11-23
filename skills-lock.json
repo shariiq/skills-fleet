@@ -99,6 +99,13 @@
       "skillPath": "skills/engineering/triage/SKILL.md",
       "computedHash": "4342a07c9ebe0696713ec93a883c46e56503a587a34d824fabab5ca61e3bdfbb"
     },
+    "typescript-best-practices": {
+      "source": "backnotprop/pstack",
+      "commit": "c3464c11c60b1352d5e8f5f0428a3a6943837568",
+      "sourceType": "github",
+      "skillPath": "skills/typescript-best-practices/SKILL.md",
+      "computedHash": "fb35e49d1b6a48fa42d81fff0e4e9834b8f98e0ebcf188203680f1f4265df690"
+    },
     "unslop": {
       "source": "backnotprop/pstack",
       "commit": "c3464c11c60b1352d5e8f5f0428a3a6943837568",
