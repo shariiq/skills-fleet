@@ -129,6 +129,14 @@ export function organize(): void {
   const lock = loadLock();
   mkdirSync(SKILLS_DIR, { recursive: true });
 
+  // Clean up any agent mirror folders that bunx skills may create locally
+  for (const dummy of ["agent", ".claude"]) {
+    const dummyPath = join(ROOT_DIR, dummy);
+    if (existsSync(dummyPath)) {
+      spawnSync("rm", ["-rf", dummyPath]);
+    }
+  }
+
   // Clean up any direct symlinks in skills/ created by bunx skills agent detectors
   if (existsSync(SKILLS_DIR)) {
     for (const file of readdirSync(SKILLS_DIR)) {
@@ -303,7 +311,7 @@ function listFleet(): void {
 function addSkill(source: string, skills: string[]): void {
   console.log(`\nFetching & adding skills from source: ${source}...`);
 
-  const args = ["skills", "add", source, "-y", "--agent", "*"];
+  const args = ["skills", "add", source, "-y"];
   if (skills.length > 0) {
     args.push("-s", ...skills);
   }
@@ -466,14 +474,14 @@ function installFleet(isGlobal: boolean): void {
     if (!isRemoteRepo && existsSync(resolve(ROOT_DIR, data.path))) {
       for (const skill of data.skills) {
         const skillPath = resolve(ROOT_DIR, data.path, skill);
-        const args = ["skills", "add", skillPath, "-y", "--agent", "*"];
+        const args = ["skills", "add", skillPath, "-y"];
         if (isGlobal) args.push("-g");
 
         console.log(`\nExecuting: bunx ${args.join(" ")}`);
         spawnSync("bunx", args, { stdio: "inherit" });
       }
     } else {
-      const args = ["skills", "add", source, "-y", "--agent", "*"];
+      const args = ["skills", "add", source, "-y"];
       if (isGlobal) args.push("-g");
       if (data.skills && data.skills.length > 0) {
         args.push("-s", ...data.skills);
