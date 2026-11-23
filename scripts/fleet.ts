@@ -129,6 +129,16 @@ export function organize(): void {
   const lock = loadLock();
   mkdirSync(SKILLS_DIR, { recursive: true });
 
+  // Clean up any direct symlinks in skills/ created by bunx skills agent detectors
+  if (existsSync(SKILLS_DIR)) {
+    for (const file of readdirSync(SKILLS_DIR)) {
+      const p = join(SKILLS_DIR, file);
+      if (lstatSync(p).isSymbolicLink()) {
+        unlinkSync(p);
+      }
+    }
+  }
+
   const grouped: Record<string, SourceGroup> = {};
 
   if (lock && lock.skills) {
