@@ -1,0 +1,18 @@
+{
+  "name": "skills-fleet",
+  "version": "1.0.0",
+  "description": "Fleet management repository to track, install, and sync agent skills across environments",
+  "type": "module",
+  "scripts": {
+    "fleet:list": "bun run scripts/fleet.ts list",
+    "fleet:install:global": "bun run scripts/fleet.ts install --global",
+    "fleet:install:project": "bun run scripts/fleet.ts install",
+    "skills:list": "bunx skills list",
+    "skills:list:global": "bunx skills list -g",
+    "skills:update": "bunx skills update"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "bun-types": "latest"
+  }
+}

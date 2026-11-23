@@ -1,0 +1,12 @@
+# Node & Dependencies
+node_modules/
+.bun/
+
+# System files
+.DS_Store
+Thumbs.db
+*.log
+
+# Build & temp files
+dist/
+tmp/
