@@ -33,6 +33,13 @@
       ],
       "path": "skills/mattpocock/skills"
     },
+    "addyosmani/agent-skills": {
+      "skills": [
+        "performance-optimization",
+        "webperf"
+      ],
+      "path": "skills/addyosmani/agent-skills"
+    },
     "custom": {
       "skills": [
         "orchestrate-workers"

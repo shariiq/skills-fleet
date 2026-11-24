@@ -469,26 +469,21 @@ function installFleet(isGlobal: boolean): void {
   console.log(`Installing fleet skills (${isGlobal ? "global" : "project"} scope)...`);
 
   for (const [source, data] of sources) {
-    const isRemoteRepo = source.includes("/") && !source.startsWith("custom") && !source.startsWith("local");
-
-    if (!isRemoteRepo && existsSync(resolve(ROOT_DIR, data.path))) {
-      for (const skill of data.skills) {
-        const skillPath = resolve(ROOT_DIR, data.path, skill);
+    for (const skill of data.skills) {
+      const skillPath = resolve(ROOT_DIR, data.path, skill);
+      if (existsSync(skillPath)) {
         const args = ["skills", "add", skillPath, "-y"];
         if (isGlobal) args.push("-g");
 
         console.log(`\nExecuting: bunx ${args.join(" ")}`);
         spawnSync("bunx", args, { stdio: "inherit" });
-      }
-    } else {
-      const args = ["skills", "add", source, "-y"];
-      if (isGlobal) args.push("-g");
-      if (data.skills && data.skills.length > 0) {
-        args.push("-s", ...data.skills);
-      }
+      } else {
+        const args = ["skills", "add", source, "-s", skill, "-y"];
+        if (isGlobal) args.push("-g");
 
-      console.log(`\nExecuting: bunx ${args.join(" ")}`);
-      spawnSync("bunx", args, { stdio: "inherit" });
+        console.log(`\nExecuting: bunx ${args.join(" ")}`);
+        spawnSync("bunx", args, { stdio: "inherit" });
+      }
     }
   }
 }

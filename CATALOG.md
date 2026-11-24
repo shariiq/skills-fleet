@@ -2,6 +2,15 @@
 
 > Managed AI agent skills grouped by source repository.
 
+## addyosmani/agent-skills
+- **Location**: `skills/addyosmani/agent-skills/`
+- **Total Skills**: 2
+
+| Skill | Description | Argument Hint |
+| --- | --- | --- |
+| [performance-optimization](./skills/addyosmani/agent-skills/performance-optimization/SKILL.md) | Optimizes application performance across frontend, backend, queries, and databases. Use when perform | `—` |
+| [webperf](./skills/addyosmani/agent-skills/webperf/SKILL.md) | Run a web performance audit on Core Web Vitals, loading, rendering, and network optimization via the | `[optional path, url, or component]` |
+
 ## backnotprop/pstack
 - **Location**: `skills/backnotprop/pstack/`
 - **Total Skills**: 3
