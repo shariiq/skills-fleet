@@ -33,6 +33,12 @@
       ],
       "path": "skills/mattpocock/skills"
     },
+    "Leonxlnx/taste-skill": {
+      "skills": [
+        "design-taste-frontend"
+      ],
+      "path": "skills/Leonxlnx/taste-skill"
+    },
     "google-gemini/demolab": {
       "skills": [
         "gemini-frontend-design"

@@ -2,6 +2,14 @@
 
 > Managed AI agent skills grouped by source repository.
 
+## Leonxlnx/taste-skill
+- **Location**: `skills/Leonxlnx/taste-skill/`
+- **Total Skills**: 1
+
+| Skill | Description | Argument Hint |
+| --- | --- | --- |
+| [design-taste-frontend](./skills/Leonxlnx/taste-skill/design-taste-frontend/SKILL.md) | >- | `—` |
+
 ## addyosmani/agent-skills
 - **Location**: `skills/addyosmani/agent-skills/`
 - **Total Skills**: 2
