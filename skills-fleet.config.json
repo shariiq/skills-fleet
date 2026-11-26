@@ -33,12 +33,30 @@
       ],
       "path": "skills/mattpocock/skills"
     },
+    "google-gemini/demolab": {
+      "skills": [
+        "gemini-frontend-design"
+      ],
+      "path": "skills/google-gemini/demolab"
+    },
+    "pbakaus/impeccable": {
+      "skills": [
+        "impeccable"
+      ],
+      "path": "skills/pbakaus/impeccable"
+    },
     "addyosmani/agent-skills": {
       "skills": [
         "performance-optimization",
         "webperf"
       ],
       "path": "skills/addyosmani/agent-skills"
+    },
+    "felipebasurto/unslop-ui": {
+      "skills": [
+        "unslop-ui"
+      ],
+      "path": "skills/felipebasurto/unslop-ui"
     },
     "custom": {
       "skills": [

@@ -36,6 +36,13 @@
       "skillPath": "skills/engineering/domain-modeling/SKILL.md",
       "computedHash": "b78689833404148c769077355e12dbe5ad996a158a1e21e58ddf169e439d9d8c"
     },
+    "gemini-frontend-design": {
+      "source": "google-gemini/demolab",
+      "commit": "cd0c1f8540c0186ec9592af972a0700fa20909d4",
+      "sourceType": "github",
+      "skillPath": "skills/gemini-frontend-design/SKILL.md",
+      "computedHash": "9a0cfd9094b4e4c762c4a218b0da34178453004bbf350baef81f3f31800dfd36"
+    },
     "grill-me": {
       "source": "mattpocock/skills",
       "commit": "abeeaf95660ba9e8b7c753eb38f441ca707a8823",
@@ -63,6 +70,13 @@
       "sourceType": "github",
       "skillPath": "skills/productivity/handoff/SKILL.md",
       "computedHash": "f60a2c3688379b7a306b3a7b8dd4120eab39da44c74fa2cb62d6424935f04aa7"
+    },
+    "impeccable": {
+      "source": "pbakaus/impeccable",
+      "commit": "2fc5e1459efbbf06d92c7306517c286bf12490cf",
+      "sourceType": "github",
+      "skillPath": ".agents/skills/impeccable/SKILL.md",
+      "computedHash": "ba5494cb853df34dc3284176083f954829717c42474107d5d01934b2f43930b4"
     },
     "implement-spec": {
       "source": "mattpocock/skills",
@@ -140,6 +154,13 @@
       "sourceType": "github",
       "skillPath": "skills/unslop/SKILL.md",
       "computedHash": "4bbcb6719a8f0f6f7fb46752e1c360791d7758a837708e300a06fc7d6907938c"
+    },
+    "unslop-ui": {
+      "source": "felipebasurto/unslop-ui",
+      "commit": "78cf65d311da128c7f0a9ea25f62731056834251",
+      "sourceType": "github",
+      "skillPath": "skills/unslop-ui/SKILL.md",
+      "computedHash": "bca7d731d5dda09a73724c8dd65e4826f14686d28a5a981f61a938fc78ae5b97"
     },
     "writing-for-agents": {
       "source": "mattpocock/skills",

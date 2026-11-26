@@ -29,6 +29,22 @@
 | --- | --- | --- |
 | [orchestrate-workers](./skills/custom/orchestrate-workers/SKILL.md) | In T3 Code, run a multi-step task with the main model writing the spec and tickets, making the valua | `—` |
 
+## felipebasurto/unslop-ui
+- **Location**: `skills/felipebasurto/unslop-ui/`
+- **Total Skills**: 1
+
+| Skill | Description | Argument Hint |
+| --- | --- | --- |
+| [unslop-ui](./skills/felipebasurto/unslop-ui/unslop-ui/SKILL.md) | Strip AI-generated UI copy, decorative chrome (eyebrows, 01/02/03 numbering, badges, dots, arrows, e | `—` |
+
+## google-gemini/demolab
+- **Location**: `skills/google-gemini/demolab/`
+- **Total Skills**: 1
+
+| Skill | Description | Argument Hint |
+| --- | --- | --- |
+| [gemini-frontend-design](./skills/google-gemini/demolab/gemini-frontend-design/SKILL.md) | Design and build polished websites and web apps tailored to the brief. Use when creating or redesign | `—` |
+
 ## mattpocock/skills
 - **Location**: `skills/mattpocock/skills/`
 - **Total Skills**: 17
@@ -52,4 +68,12 @@
 | [to-tickets](./skills/mattpocock/skills/to-tickets/SKILL.md) | Break a plan, spec, or the current conversation into a set of tracer-bullet tickets, each declaring  | `—` |
 | [triage](./skills/mattpocock/skills/triage/SKILL.md) | Move issues and external PRs through a state machine of triage roles, categorise, verify, grill if n | `—` |
 | [writing-for-agents](./skills/mattpocock/skills/writing-for-agents/SKILL.md) | Writing documents for agents. Use when creating or editing skills, or modifying AGENTS.md or CLAUDE. | `—` |
+
+## pbakaus/impeccable
+- **Location**: `skills/pbakaus/impeccable/`
+- **Total Skills**: 1
+
+| Skill | Description | Argument Hint |
+| --- | --- | --- |
+| [impeccable](./skills/pbakaus/impeccable/impeccable/SKILL.md) | Use when the user wants to design, redesign, shape, critique, audit, polish, simplify, harden, anima | `—` |
 
