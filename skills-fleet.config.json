@@ -9,7 +9,7 @@
         "typescript-best-practices",
         "unslop"
       ],
-      "path": "skills/backnotprop/pstack"
+      "path": "skills\\backnotprop\\pstack"
     },
     "mattpocock/skills": {
       "skills": [
@@ -31,44 +31,104 @@
         "triage",
         "writing-for-agents"
       ],
-      "path": "skills/mattpocock/skills"
+      "path": "skills\\mattpocock\\skills"
     },
     "Leonxlnx/taste-skill": {
       "skills": [
         "design-taste-frontend"
       ],
-      "path": "skills/Leonxlnx/taste-skill"
+      "path": "skills\\Leonxlnx\\taste-skill"
     },
     "google-gemini/demolab": {
       "skills": [
         "gemini-frontend-design"
       ],
-      "path": "skills/google-gemini/demolab"
+      "path": "skills\\google-gemini\\demolab"
     },
     "pbakaus/impeccable": {
       "skills": [
         "impeccable"
       ],
-      "path": "skills/pbakaus/impeccable"
+      "path": "skills\\pbakaus\\impeccable"
     },
     "addyosmani/agent-skills": {
       "skills": [
-        "performance-optimization",
-        "webperf"
+        "performance-optimization"
       ],
-      "path": "skills/addyosmani/agent-skills"
+      "path": "skills\\addyosmani\\agent-skills"
     },
     "felipebasurto/unslop-ui": {
       "skills": [
         "unslop-ui"
       ],
-      "path": "skills/felipebasurto/unslop-ui"
+      "path": "skills\\felipebasurto\\unslop-ui"
+    },
+    "addyosmani\\agent-skills": {
+      "skills": [
+        "performance-optimization",
+        "webperf"
+      ],
+      "path": "skills\\addyosmani\\agent-skills"
+    },
+    "backnotprop\\pstack": {
+      "skills": [
+        "bro",
+        "typescript-best-practices",
+        "unslop"
+      ],
+      "path": "skills\\backnotprop\\pstack"
     },
     "custom": {
       "skills": [
         "orchestrate-workers"
       ],
-      "path": "skills/custom"
+      "path": "skills\\custom"
+    },
+    "felipebasurto\\unslop-ui": {
+      "skills": [
+        "unslop-ui"
+      ],
+      "path": "skills\\felipebasurto\\unslop-ui"
+    },
+    "google-gemini\\demolab": {
+      "skills": [
+        "gemini-frontend-design"
+      ],
+      "path": "skills\\google-gemini\\demolab"
+    },
+    "Leonxlnx\\taste-skill": {
+      "skills": [
+        "design-taste-frontend"
+      ],
+      "path": "skills\\Leonxlnx\\taste-skill"
+    },
+    "mattpocock\\skills": {
+      "skills": [
+        "code-review",
+        "codebase-design",
+        "diagnosing-bugs",
+        "domain-modeling",
+        "grill-me",
+        "grill-with-docs",
+        "grilling",
+        "handoff",
+        "implement-spec",
+        "improve-codebase-architecture",
+        "prototype",
+        "research",
+        "tdd",
+        "to-spec",
+        "to-tickets",
+        "triage",
+        "writing-for-agents"
+      ],
+      "path": "skills\\mattpocock\\skills"
+    },
+    "pbakaus\\impeccable": {
+      "skills": [
+        "impeccable"
+      ],
+      "path": "skills\\pbakaus\\impeccable"
     }
   }
 }
