@@ -1,11 +1,13 @@
 import { spawnSync } from "node:child_process";
 import {
+  cpSync,
   existsSync,
   lstatSync,
   mkdirSync,
   readdirSync,
   readFileSync,
   renameSync,
+  rmSync,
   symlinkSync,
   unlinkSync,
   writeFileSync,
@@ -125,6 +127,48 @@ function saveConfig(config: FleetConfig): void {
   writeFileSync(CONFIG_PATH, JSON.stringify(config, null, 2) + "\n", "utf-8");
 }
 
+function safeRemove(targetPath: string): void {
+  if (!existsSync(targetPath)) return;
+  try {
+    const stat = lstatSync(targetPath);
+    if (stat.isSymbolicLink()) {
+      unlinkSync(targetPath);
+      return;
+    }
+  } catch {}
+
+  try {
+    rmSync(targetPath, { recursive: true, force: true, maxRetries: 3, retryDelay: 50 });
+  } catch {
+    try {
+      rmSync(targetPath, { recursive: true, force: true });
+    } catch {}
+  }
+}
+
+function safeMoveOrCopy(src: string, dest: string): void {
+  safeRemove(dest);
+  try {
+    renameSync(src, dest);
+  } catch {
+    cpSync(src, dest, { recursive: true, force: true });
+    safeRemove(src);
+  }
+}
+
+function safeSymlink(targetRel: string, linkPath: string): void {
+  safeRemove(linkPath);
+  try {
+    const symlinkType = process.platform === "win32" ? "junction" : "dir";
+    symlinkSync(targetRel, linkPath, symlinkType);
+  } catch {
+    try {
+      const absTarget = resolve(dirname(linkPath), targetRel);
+      cpSync(absTarget, linkPath, { recursive: true, force: true });
+    } catch {}
+  }
+}
+
 export function organize(): void {
   const lock = loadLock();
   mkdirSync(SKILLS_DIR, { recursive: true });
@@ -132,9 +176,7 @@ export function organize(): void {
   // Clean up any agent mirror folders that bunx skills may create locally
   for (const dummy of ["agent", ".claude", ".crush", ".devin", ".goose", ".kimchi", ".openclaw"]) {
     const dummyPath = join(ROOT_DIR, dummy);
-    if (existsSync(dummyPath)) {
-      spawnSync("rm", ["-rf", dummyPath]);
-    }
+    safeRemove(dummyPath);
   }
 
   // Clean up any direct symlinks in skills/ created by bunx skills agent detectors
@@ -142,7 +184,7 @@ export function organize(): void {
     for (const file of readdirSync(SKILLS_DIR)) {
       const p = join(SKILLS_DIR, file);
       if (lstatSync(p).isSymbolicLink()) {
-        unlinkSync(p);
+        safeRemove(p);
       }
     }
   }
@@ -172,18 +214,15 @@ export function organize(): void {
         if (stat.isSymbolicLink()) {
           // Already symlinked
         } else if (stat.isDirectory()) {
-          if (existsSync(skillTargetAbsDir)) {
-            spawnSync("rm", ["-rf", skillTargetAbsDir]);
-          }
-          renameSync(agentSkillDir, skillTargetAbsDir);
+          safeMoveOrCopy(agentSkillDir, skillTargetAbsDir);
           const relTarget = relative(AGENTS_SKILLS_DIR, skillTargetAbsDir);
-          symlinkSync(relTarget, agentSkillDir);
+          safeSymlink(relTarget, agentSkillDir);
         }
       } else {
         mkdirSync(AGENTS_SKILLS_DIR, { recursive: true });
         if (existsSync(skillTargetAbsDir)) {
           const relTarget = relative(AGENTS_SKILLS_DIR, skillTargetAbsDir);
-          symlinkSync(relTarget, agentSkillDir);
+          safeSymlink(relTarget, agentSkillDir);
         }
       }
 
@@ -222,7 +261,7 @@ export function organize(): void {
             if (!existsSync(agentSkillDir)) {
               mkdirSync(AGENTS_SKILLS_DIR, { recursive: true });
               const relTarget = relative(AGENTS_SKILLS_DIR, sub);
-              symlinkSync(relTarget, agentSkillDir);
+              safeSymlink(relTarget, agentSkillDir);
             }
           }
         } else {
@@ -339,15 +378,11 @@ function removeSkill(target: string, isSource = false): void {
     }
 
     const sourceDir = resolve(ROOT_DIR, sourceData.path);
-    if (existsSync(sourceDir)) {
-      spawnSync("rm", ["-rf", sourceDir]);
-    }
+    safeRemove(sourceDir);
 
     for (const skill of sourceData.skills) {
       const agentLink = join(AGENTS_SKILLS_DIR, skill);
-      if (existsSync(agentLink)) {
-        try { unlinkSync(agentLink); } catch {}
-      }
+      safeRemove(agentLink);
       if (lock && lock.skills && lock.skills[skill]) {
         delete lock.skills[skill];
       }
@@ -371,22 +406,18 @@ function removeSkill(target: string, isSource = false): void {
     if (data.skills.includes(target)) {
       found = true;
       const skillDir = resolve(ROOT_DIR, data.path, target);
-      if (existsSync(skillDir)) {
-        spawnSync("rm", ["-rf", skillDir]);
-      }
+      safeRemove(skillDir);
       data.skills = data.skills.filter((s) => s !== target);
       if (data.skills.length === 0) {
         delete config.sources[source];
         const sourceDir = resolve(ROOT_DIR, data.path);
-        try { spawnSync("rmdir", [sourceDir]); } catch {}
+        safeRemove(sourceDir);
       }
     }
   }
 
   const agentLink = join(AGENTS_SKILLS_DIR, target);
-  if (existsSync(agentLink)) {
-    try { unlinkSync(agentLink); } catch {}
-  }
+  safeRemove(agentLink);
 
   if (lock && lock.skills && lock.skills[target]) {
     delete lock.skills[target];
@@ -442,13 +473,7 @@ function uninstallFleet(isGlobal: boolean, wipeAll = false): void {
   if (existsSync(targetDir)) {
     for (const skill of skillList) {
       const p = join(targetDir, skill);
-      if (existsSync(p)) {
-        try {
-          unlinkSync(p);
-        } catch {
-          spawnSync("rm", ["-rf", p]);
-        }
-      }
+      safeRemove(p);
     }
   }
 
@@ -514,7 +539,7 @@ function cleanDummyHarnesses(): void {
           ["skills", "data", "assistant", "windsurf", "cortex", "agent"].includes(entries[0]));
 
       if (isDummyOnly) {
-        spawnSync("rm", ["-rf", p]);
+        safeRemove(p);
         removed.push(`~/${name}`);
       } else {
         console.log(`⚠️  Skipped ~/${name} (contains other non-skill files)`);
@@ -529,7 +554,7 @@ function cleanDummyHarnesses(): void {
       try {
         const entries = readdirSync(p);
         if (entries.length === 0 || (entries.length === 1 && entries[0] === "skills")) {
-          spawnSync("rm", ["-rf", p]);
+          safeRemove(p);
           removed.push(`./${name}`);
         }
       } catch {}
