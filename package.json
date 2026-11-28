@@ -12,6 +12,7 @@
     "fleet:install:project": "bun run scripts/fleet.ts install",
     "fleet:clean:machine": "bun run scripts/fleet.ts clean --global",
     "fleet:clean:harnesses": "bun run scripts/fleet.ts clean-harnesses",
+    "fleet:update": "bun run scripts/fleet.ts update",
     "fleet:uninstall:global": "bun run scripts/fleet.ts clean --global",
     "fleet:uninstall:project": "bun run scripts/fleet.ts clean",
     "fleet:wipe:machine": "bun run scripts/fleet.ts clean --global --all",

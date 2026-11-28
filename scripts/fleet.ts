@@ -173,11 +173,9 @@ export function organize(): void {
           // Already symlinked
         } else if (stat.isDirectory()) {
           if (existsSync(skillTargetAbsDir)) {
-            // Target already exists, remove temporary folder
-            spawnSync("rm", ["-rf", agentSkillDir]);
-          } else {
-            renameSync(agentSkillDir, skillTargetAbsDir);
+            spawnSync("rm", ["-rf", skillTargetAbsDir]);
           }
+          renameSync(agentSkillDir, skillTargetAbsDir);
           const relTarget = relative(AGENTS_SKILLS_DIR, skillTargetAbsDir);
           symlinkSync(relTarget, agentSkillDir);
         }
@@ -603,9 +601,21 @@ function main(): void {
       cleanDummyHarnesses();
       break;
 
+    case "update": {
+      console.log("\nChecking for skill updates from upstream sources...");
+      const result = spawnSync("bunx", ["skills", "update", "-y"], { stdio: "inherit" });
+      if (result.status !== 0) {
+        console.error("Error updating skills.");
+      }
+      organize();
+      cleanDummyHarnesses();
+      listFleet();
+      break;
+    }
+
     default:
       console.log(`Unknown command: ${command}`);
-      console.log("Available commands: list, organize, add <source> [skills...], remove <skill> [--source], install [--global], clean [--global] [--all], clean-harnesses");
+      console.log("Available commands: list, organize, add <source> [skills...], remove <skill> [--source], install [--global], clean [--global] [--all], clean-harnesses, update");
       process.exit(1);
   }
 }
