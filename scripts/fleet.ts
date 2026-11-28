@@ -130,7 +130,7 @@ export function organize(): void {
   mkdirSync(SKILLS_DIR, { recursive: true });
 
   // Clean up any agent mirror folders that bunx skills may create locally
-  for (const dummy of ["agent", ".claude"]) {
+  for (const dummy of ["agent", ".claude", ".crush", ".devin", ".goose", ".kimchi", ".openclaw"]) {
     const dummyPath = join(ROOT_DIR, dummy);
     if (existsSync(dummyPath)) {
       spawnSync("rm", ["-rf", dummyPath]);
@@ -522,7 +522,7 @@ function cleanDummyHarnesses(): void {
     } catch {}
   }
 
-  const localDummies = ["agent", ".claude"];
+  const localDummies = ["agent", ".claude", ".crush", ".devin", ".goose", ".kimchi", ".openclaw"];
   for (const name of localDummies) {
     const p = join(ROOT_DIR, name);
     if (existsSync(p)) {
@@ -545,6 +545,52 @@ function cleanDummyHarnesses(): void {
     }
     console.log("");
   }
+}
+
+function syncAndPush(commitMessage?: string): void {
+  console.log("\n🚀 Running full fleet update, global sync, and git push...\n");
+
+  console.log("📥 Step 1/5: Pulling latest changes from git remote...");
+  const pullRes = spawnSync("git", ["pull", "--rebase"], { stdio: "inherit" });
+  if (pullRes.status !== 0) {
+    console.warn("⚠️  Git pull failed or had conflicts, continuing with sync...");
+  }
+
+  console.log("\n🔄 Step 2/5: Checking for upstream skill updates...");
+  spawnSync("bunx", ["skills", "update", "-y"], { stdio: "inherit" });
+
+  console.log("\n📦 Step 3/5: Restoring updated skills from lockfile...");
+  spawnSync("bunx", ["skills", "experimental_install"], { stdio: "inherit" });
+
+  console.log("\n🧹 Step 4/5: Organizing fleet and syncing globally...");
+  organize();
+  cleanDummyHarnesses();
+  installFleet(true);
+  cleanDummyHarnesses();
+
+  console.log("\n📤 Step 5/5: Checking for changes and pushing to remote...");
+  const statusResult = spawnSync("git", ["status", "--porcelain"], { encoding: "utf-8" });
+  const hasChanges = Boolean(statusResult.stdout && statusResult.stdout.trim().length > 0);
+
+  if (hasChanges) {
+    console.log("Found changes to commit:");
+    console.log(statusResult.stdout);
+    spawnSync("git", ["add", "."], { stdio: "inherit" });
+    const msg = commitMessage || "chore(fleet): sync skills from upstream and update global installation";
+    const commitRes = spawnSync("git", ["commit", "-m", msg], { stdio: "inherit" });
+    if (commitRes.status === 0) {
+      const pushRes = spawnSync("git", ["push"], { stdio: "inherit" });
+      if (pushRes.status === 0) {
+        console.log("\n✅ Successfully pushed updates to git remote!");
+      } else {
+        console.error("\n❌ Failed to push to remote.");
+      }
+    }
+  } else {
+    console.log("\n✅ Fleet is already clean and in sync. Nothing to commit.");
+  }
+
+  console.log("\n✨ Fleet update, sync, and push complete!\n");
 }
 
 function main(): void {
@@ -607,15 +653,23 @@ function main(): void {
       if (result.status !== 0) {
         console.error("Error updating skills.");
       }
+      spawnSync("bunx", ["skills", "experimental_install"], { stdio: "inherit" });
       organize();
       cleanDummyHarnesses();
       listFleet();
       break;
     }
 
+    case "sync":
+    case "sync-push":
+    case "sync:push": {
+      syncAndPush(args.join(" ") || undefined);
+      break;
+    }
+
     default:
       console.log(`Unknown command: ${command}`);
-      console.log("Available commands: list, organize, add <source> [skills...], remove <skill> [--source], install [--global], clean [--global] [--all], clean-harnesses, update");
+      console.log("Available commands: list, organize, add <source> [skills...], remove <skill> [--source], install [--global], clean [--global] [--all], clean-harnesses, update, sync [commit-message]");
       process.exit(1);
   }
 }

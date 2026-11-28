@@ -13,4 +13,9 @@ tmp/
 
 # Local agent link mirrors
 .claude/
+.crush/
+.devin/
+.goose/
+.kimchi/
+.openclaw/
 agent/
