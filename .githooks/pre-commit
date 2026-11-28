@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
 set -e
 bun run scripts/fleet.ts organize
-git add skills/ skills-fleet.config.json CATALOG.md 2>/dev/null || true
+git add skills-fleet.config.json skills-lock.json CATALOG.md skills/custom/ 2>/dev/null || true

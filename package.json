@@ -1,13 +1,15 @@
 {
   "name": "skills-fleet",
   "version": "1.0.0",
-  "description": "Fleet management repository to track, install, and sync agent skills across environments",
+  "description": "Central registry to track, install, and sync agent skills across machines",
   "type": "module",
   "scripts": {
+    "test": "bun test",
     "fleet:add": "bun run scripts/fleet.ts add",
     "fleet:remove": "bun run scripts/fleet.ts remove",
     "fleet:organize": "bun run scripts/fleet.ts organize",
     "fleet:list": "bun run scripts/fleet.ts list",
+    "fleet:status": "bun run scripts/fleet.ts status",
     "fleet:install:global": "bun run scripts/fleet.ts install --global",
     "fleet:install:project": "bun run scripts/fleet.ts install",
     "fleet:clean:machine": "bun run scripts/fleet.ts clean --global",

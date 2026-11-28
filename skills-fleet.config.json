@@ -1,15 +1,36 @@
 {
   "name": "skills-fleet",
   "version": "1.0.0",
-  "description": "Central catalog for managed AI agent skills",
+  "description": "Central registry for managed AI agent skills",
   "sources": {
+    "addyosmani/agent-skills": {
+      "skills": [
+        "performance-optimization"
+      ]
+    },
     "backnotprop/pstack": {
       "skills": [
         "bro",
         "typescript-best-practices",
         "unslop"
-      ],
-      "path": "skills\\backnotprop\\pstack"
+      ]
+    },
+    "custom": {
+      "path": "skills/custom",
+      "skills": [
+        "orchestrate-workers",
+        "webperf"
+      ]
+    },
+    "felipebasurto/unslop-ui": {
+      "skills": [
+        "unslop-ui"
+      ]
+    },
+    "google-gemini/demolab": {
+      "skills": [
+        "gemini-frontend-design"
+      ]
     },
     "mattpocock/skills": {
       "skills": [
@@ -30,105 +51,111 @@
         "to-tickets",
         "triage",
         "writing-for-agents"
-      ],
-      "path": "skills\\mattpocock\\skills"
+      ]
+    }
+  },
+  "skills": {
+    "bro": {
+      "source": "backnotprop/pstack",
+      "description": "Restate the last message in plain human language, with no jargon."
     },
-    "Leonxlnx/taste-skill": {
-      "skills": [
-        "design-taste-frontend"
-      ],
-      "path": "skills\\Leonxlnx\\taste-skill"
+    "code-review": {
+      "source": "mattpocock/skills",
+      "description": "Review the changes since a fixed point (commit, branch, tag, or merge-base) along two axes: Standards (does the code follow this repo's documented coding standards?) and Spec (does the code match what the originating issue/spec asked for?). Runs both reviews in parallel sub-agents and reports them side by side. Use when the user wants to review a branch, a PR, work-in-progress changes, or asks to \"review since X\"."
     },
-    "google-gemini/demolab": {
-      "skills": [
-        "gemini-frontend-design"
-      ],
-      "path": "skills\\google-gemini\\demolab"
+    "codebase-design": {
+      "source": "mattpocock/skills",
+      "description": "Shared vocabulary for designing deep modules. Use when the user wants to design or improve a module's interface, find deepening opportunities, decide where a seam goes, make code more testable or AI-navigable, or when another skill needs the deep-module vocabulary."
     },
-    "pbakaus/impeccable": {
-      "skills": [
-        "impeccable"
-      ],
-      "path": "skills\\pbakaus\\impeccable"
+    "diagnosing-bugs": {
+      "source": "mattpocock/skills",
+      "description": "Diagnosis loop for hard bugs and performance regressions. Use when the user says \"diagnose\"/\"debug this\", or reports something broken/throwing/failing/slow."
     },
-    "addyosmani/agent-skills": {
-      "skills": [
-        "performance-optimization"
-      ],
-      "path": "skills\\addyosmani\\agent-skills"
+    "domain-modeling": {
+      "source": "mattpocock/skills",
+      "description": "Build and sharpen a project's domain model. Use when discussing codebase terminology, writing or editing a GLOSSARY.md, or recording or editing an ADR."
     },
-    "felipebasurto/unslop-ui": {
-      "skills": [
-        "unslop-ui"
-      ],
-      "path": "skills\\felipebasurto\\unslop-ui"
+    "gemini-frontend-design": {
+      "source": "google-gemini/demolab",
+      "description": "Design and build polished websites and web apps tailored to the brief. Use when creating or redesigning web interfaces, covering layout, color, typography, custom imagery, and motion."
     },
-    "addyosmani\\agent-skills": {
-      "skills": [
-        "performance-optimization",
-        "webperf"
-      ],
-      "path": "skills\\addyosmani\\agent-skills"
+    "grill-me": {
+      "source": "mattpocock/skills",
+      "description": "A relentless interview to sharpen a plan or design."
     },
-    "backnotprop\\pstack": {
-      "skills": [
-        "bro",
-        "typescript-best-practices",
-        "unslop"
-      ],
-      "path": "skills\\backnotprop\\pstack"
+    "grill-with-docs": {
+      "source": "mattpocock/skills",
+      "description": "A relentless interview to sharpen a plan or design, which also creates docs (ADR's and glossary) as we go."
     },
-    "custom": {
-      "skills": [
-        "orchestrate-workers"
-      ],
-      "path": "skills\\custom"
+    "grilling": {
+      "source": "mattpocock/skills",
+      "description": "Grill the user relentlessly about a plan, decision, or idea. Use when the user wants to stress-test their thinking, or uses any 'grill' trigger phrases."
     },
-    "felipebasurto\\unslop-ui": {
-      "skills": [
-        "unslop-ui"
-      ],
-      "path": "skills\\felipebasurto\\unslop-ui"
+    "handoff": {
+      "source": "mattpocock/skills",
+      "description": "Compact the current conversation into a handoff document for another agent to pick up.",
+      "argumentHint": "What will the next session be used for?"
     },
-    "google-gemini\\demolab": {
-      "skills": [
-        "gemini-frontend-design"
-      ],
-      "path": "skills\\google-gemini\\demolab"
+    "implement-spec": {
+      "source": "mattpocock/skills",
+      "description": "Implement the result of /to-spec and /to-tickets in code."
     },
-    "Leonxlnx\\taste-skill": {
-      "skills": [
-        "design-taste-frontend"
-      ],
-      "path": "skills\\Leonxlnx\\taste-skill"
+    "improve-codebase-architecture": {
+      "source": "mattpocock/skills",
+      "description": "Scan a codebase for deepening opportunities, present them as a visual HTML report, then grill through whichever one you pick."
     },
-    "mattpocock\\skills": {
-      "skills": [
-        "code-review",
-        "codebase-design",
-        "diagnosing-bugs",
-        "domain-modeling",
-        "grill-me",
-        "grill-with-docs",
-        "grilling",
-        "handoff",
-        "implement-spec",
-        "improve-codebase-architecture",
-        "prototype",
-        "research",
-        "tdd",
-        "to-spec",
-        "to-tickets",
-        "triage",
-        "writing-for-agents"
-      ],
-      "path": "skills\\mattpocock\\skills"
+    "orchestrate-workers": {
+      "source": "custom",
+      "description": "In T3 Code, run a multi-step task with the main model writing the spec and tickets, making the valuable decisions and verifying, while cheaper worker models implement in persistent T3 sessions it steers and critiques. Use when the user names orchestrate-workers or asks to delegate implementation to a cheaper model (\"have DeepSeek/Haiku/Sonnet implement it, you plan and verify\"). Not for tasks that are a single ticket or under about 100 changed lines (unless the user names this skill), and not for exploratory or ambiguous work where the spec cannot be written up front."
     },
-    "pbakaus\\impeccable": {
-      "skills": [
-        "impeccable"
-      ],
-      "path": "skills\\pbakaus\\impeccable"
+    "performance-optimization": {
+      "source": "addyosmani/agent-skills",
+      "description": "Optimizes application performance across frontend, backend, queries, and databases. Use when performance requirements exist, when you suspect performance regressions, when Core Web Vitals or load times need improvement, when N+1 query patterns need fixing, or when profiling reveals bottlenecks."
+    },
+    "prototype": {
+      "source": "mattpocock/skills",
+      "description": "Build a throwaway prototype to answer a design question. Use when the user wants to sanity-check whether a state model or logic feels right, or explore what a UI should look like."
+    },
+    "research": {
+      "source": "mattpocock/skills",
+      "description": "Investigate a question against high-trust primary sources and capture the findings as a Markdown file in the repo. Use when the user wants a topic researched, docs or API facts gathered, or reading legwork delegated to a background agent."
+    },
+    "tdd": {
+      "source": "mattpocock/skills",
+      "description": "Test-driven development. Use when the user wants to build features or fix bugs test-first, mentions \"red-green-refactor\", or wants integration tests."
+    },
+    "to-spec": {
+      "source": "mattpocock/skills",
+      "description": "Turn the current conversation into a spec and publish it to the project issue tracker: no interview, just synthesis of what you've already discussed."
+    },
+    "to-tickets": {
+      "source": "mattpocock/skills",
+      "description": "Break a plan, spec, or the current conversation into a set of tracer-bullet tickets, each declaring its blocking edges, published to the configured tracker (edges as text in one file per ticket locally, or native blocking links on a real tracker)."
+    },
+    "triage": {
+      "source": "mattpocock/skills",
+      "description": "Move issues and external PRs through a state machine of triage roles, categorise, verify, grill if needed, and write agent-ready briefs."
+    },
+    "typescript-best-practices": {
+      "source": "backnotprop/pstack",
+      "description": "TypeScript best practices. Use when reading or editing any .ts or .tsx file."
+    },
+    "unslop": {
+      "source": "backnotprop/pstack",
+      "description": "Cut AI tells from any writing."
+    },
+    "unslop-ui": {
+      "source": "felipebasurto/unslop-ui",
+      "description": "Strip AI-generated UI copy, decorative chrome (eyebrows, 01/02/03 numbering, badges, dots, arrows, edge stripes) and chart clutter (titles, legends, gridlines) from web pages, apps, dashboards and charts. Use when asked to clean up, tighten, polish, declutter, unslop or humanize interface copy and visual surface (gradients, spacing, motion, edge alignment), cut filler or em dashes, when a screen looks AI-made or generic, or as a final pass once you finish building or restyling a screen. Not for the build itself: layout redesigns, new features, chart-type or data changes, logic refactors, or non-UI prose (docs, emails, blog posts)."
+    },
+    "webperf": {
+      "source": "custom",
+      "description": "Run a web performance audit on Core Web Vitals, loading, rendering, and network optimization via the web-performance-auditor persona.",
+      "argumentHint": "[optional path, url, or component]"
+    },
+    "writing-for-agents": {
+      "source": "mattpocock/skills",
+      "description": "Writing documents for agents. Use when creating or editing skills, or modifying AGENTS.md or CLAUDE.md."
     }
   }
 }

@@ -11,7 +11,10 @@ Thumbs.db
 dist/
 tmp/
 
-# Local agent link mirrors
+# Local staging & agent mirrors (never commit upstream copies or OS symlinks/junctions)
+.agents/
+skills/*
+!skills/custom/
 .claude/
 .crush/
 .devin/
